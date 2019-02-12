@@ -24,13 +24,13 @@ read urls
 CUR_PATH=`pwd`
 OUTPUT_NAME=$name
 ROOT_PATH=${CUR_PATH}
-mkdir ${CUR_PATH}/$name
-cp -rf ${CUR_PATH}/module/* ${CUR_PATH}/$name
-xml=${CUR_PATH}/$name/AndroidManifest.xml
-cat > $xml <<- EOM
+mkdir ${ROOT_PATH}/$name
+cp -rf ${ROOT_PATH}/module/* ${ROOT_PATH}/$name
+xml=${ROOT_PATH}/$name/AndroidManifest.xml
+cat > ${xml} <<- EOM
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.$name.android">
+    package="com.$name">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -56,18 +56,18 @@ cat > $xml <<- EOM
 </manifest>
 EOM
 
-str=${CUR_PATH}/$name/res/values/strings.xml
-cat > $str <<- EOM
+str=${ROOT_PATH}/$name/res/values/strings.xml
+cat > ${str} <<- EOM
 <resources>
     <string name="app_name">$name</string>
 </resources>
 EOM
 
-mkdir ${CUR_PATH}/$name/src/com/$name && mkdir ${CUR_PATH}/$name/src/com/$name/android
+mkdir ${ROOT_PATH}/$name/src/com/$name
 
-jav=${CUR_PATH}/$name/src/com/$name/android/MainActivity.java
-cat > $jav <<- EOM
-package com.$name.android;
+jav=${ROOT_PATH}/$name/src/com/$name/MainActivity.java
+cat > ${jav} <<- EOM
+package com.$name;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -126,7 +126,7 @@ public class MainActivity extends Activity {
     }
 }
 EOM
-cd ${CUR_PATH}/$name
+cd ${ROOT_PATH}/$name
 echo
 echo -e "${Yellow} search res dirrectories..."
 sleep 2
@@ -217,9 +217,9 @@ echo -e "${Red} Sign the APK...${White}"
 
 dalvikvm -cp ${ROOT_PATH}/bin/apksigner.dex net.fornwall.apksigner.Main -p android ${ROOT_PATH}/bin/test.jks ${OUTPUT_NAME}.apk ${OUTPUT_NAME}.signed.apk
 
-cp -rf ${CUR_PATH}/$name/bin/${OUTPUT_NAME}.signed.apk /sdcard/${OUTPUT_NAME}.apk
+cp -rf ${ROOT_PATH}/$name/bin/${OUTPUT_NAME}.signed.apk /sdcard/${OUTPUT_NAME}.apk
 echo
 echo -e "${Blue}APK Saved to sdcard "
 echo -e "${Red} Done..."
-rm -rf ${CUR_PATH}/$name
+rm -rf ${ROOT_PATH}/$name
 
