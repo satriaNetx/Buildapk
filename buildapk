@@ -62,7 +62,8 @@ cat > ${str} <<- EOM
     <string name="app_name">$name</string>
 </resources>
 EOM
-
+mkdir ${ROOT_PATH}/$name/src
+mkdir ${ROOT_PATH}/$name/src/com
 mkdir ${ROOT_PATH}/$name/src/com/$name
 
 jav=${ROOT_PATH}/$name/src/com/$name/MainActivity.java
